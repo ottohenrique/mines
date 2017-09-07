@@ -2,28 +2,27 @@ require './pretty_printer'
 require './basic_printer'
 require './game'
 
+def prompt(msg, d = '')
+  print msg
+  i = STDIN.gets.chomp.downcase
+  i.empty? ? d : i
+end
 
-print "Deseja jogar com cores? (Y/n) > "
-colors = STDIN.gets.chomp.downcase
-
-print "Linhas (5) > "
-rows = STDIN.gets.chomp
-rows = rows.empty? ? 5 : rows.to_i
-
-print "Colunas (8) > "
-cols = STDIN.gets.chomp
-cols = cols.empty? ? 8 : cols.to_i
-
-print "Bombas (15) > "
-bombs = STDIN.gets.chomp
-bombs = bombs.empty? ? 8 : bombs.to_i
+def iprompt(msg, d = '')
+  prompt(msg, d).to_i
+end
 
 
+colors = prompt('Deseja jogar com cores? (Y/n) > ', 'y')
 if colors == 'n'
   @printer = BasicPrinter
 else
   @printer = PrettyPrinter
 end
+
+rows = iprompt('Linhas (5) > ', 5)
+cols = iprompt('Colunas (8) > ', 8)
+bombs = iprompt('Bombas (15) > ', 15)
 
 mines = Game.new(rows, cols, bombs)
 
@@ -31,23 +30,36 @@ begin
   while true
     @printer.new(mines.board_state).print
 
-    print "flag (y/N) > "
-    f = STDIN.gets.chomp.downcase
+    c = prompt('comando (P/f/s/q/?) > ', 'p')
 
-    print "x > "
-    x = STDIN.gets.to_i
+    case c
+    when 'p'
+      x = iprompt('x > ')
+      y = iprompt('y > ')
+      valid = mines.play(x, y)
+      
+      puts "Jogada inválida, jogar novamente" unless valid
+    when 'f'
+      x = iprompt('x > ')
+      y = iprompt('y > ')
+      valid = mines.flag(x, y)
+      
+      puts "Jogada inválida, jogar novamente" unless valid
+    when 's'
+    when 'q'
+      exit(1)
+    when '?'
+      puts <<-HELP
+          p: jogar
+          f: colocar bandeira
+          s: placar
+          q: sair
+          ?: ajuda (esse comando)
+        HELP
+    else
+      puts "#{x}: Comando inválido"
+    end
 
-    print "y > "
-    y = STDIN.gets.to_i
-
-    valid = if f == 'y'
-              mines.flag(x, y)
-            else
-              mines.play(x, y)
-            end
-
-    
-    puts "Jogada inválida, jogar novamente" unless valid
   end
 rescue => e
   @printer.new(mines.board_state).print
