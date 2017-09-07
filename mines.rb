@@ -35,6 +35,17 @@ class Mines
     true
   end
 
+  def flag(x, y)
+    case @state[x][y]
+    when '.'
+      @state[x][y] = '?'
+    when '?'
+      @state[x][y] = '.'
+    else
+      false
+    end
+  end
+
   def fill_bombs(mines)
     while mines > 0
       x = rand(@rows)
@@ -94,13 +105,23 @@ begin
   while true
     print_game(mines)
 
+    print "flag (y/N) > "
+    f = STDIN.gets.chomp.downcase
+
     print "x > "
     x = STDIN.gets.to_i
 
     print "y > "
     y = STDIN.gets.to_i
 
-    mines.play(x, y)
+    valid = if f == 'y'
+              mines.flag(x, y)
+            else
+              mines.play(x, y)
+            end
+
+    
+    puts "Jogada inválida, jogar novamente" unless valid
   end
 rescue => e
   puts e
