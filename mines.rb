@@ -1,3 +1,5 @@
+require './print_printer'
+
 class Mines
   attr_accessor :rows, :cols
 
@@ -90,20 +92,11 @@ class Mines
 end
 
 
-def print_game(mines)
-  mines.board_state.each_with_index do |row, i|
-    if i == 0
-      puts "    #{(0..row.size-1).to_a.join('   ')}"
-    end
-    puts "#{i} [ #{row.join(' | ')} ]"
-  end
-end
-
 mines = Mines.new(5, 8, 5)
 
 begin
   while true
-    print_game(mines)
+    PrintPrinter.new(mines.board_state).print
 
     print "flag (y/N) > "
     f = STDIN.gets.chomp.downcase
@@ -125,5 +118,5 @@ begin
   end
 rescue => e
   puts e
-  print_game(mines)
+  PrintPrinter.new(mines.board_state).print
 end
