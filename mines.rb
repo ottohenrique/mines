@@ -33,18 +33,23 @@ begin
     c = prompt('comando (P/f/s/q/?) > ', 'p')
 
     case c
-    when 'p'
+    when 'p', 'f'
       x = iprompt('x > ')
       y = iprompt('y > ')
-      valid = mines.play(x, y)
-      
-      puts "Jogada inválida, jogar novamente" unless valid
-    when 'f'
-      x = iprompt('x > ')
-      y = iprompt('y > ')
-      valid = mines.flag(x, y)
-      
-      puts "Jogada inválida, jogar novamente" unless valid
+
+      if (x < 0 || x >= rows) ||
+          (y < 0 || y >= cols)
+
+        puts "Jogada inválida, jogar novamente"
+      else
+        valid = if c == 'p'
+                  mines.play(x, y)
+                else
+                  mines.flag(x, y)
+                end
+
+        puts "Jogada inválida, jogar novamente" unless valid
+      end
     when 's'
     when 'q'
       exit(1)
