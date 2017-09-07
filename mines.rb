@@ -28,6 +28,7 @@ class Mines
         end
       end
     else
+      @state[x][y] = 'X'
       raise 'Booooom!'
     end
 
@@ -89,14 +90,19 @@ end
 
 mines = Mines.new(5, 8, 5)
 
-while true
+begin
+  while true
+    print_game(mines)
+
+    print "x > "
+    x = STDIN.gets.to_i
+
+    print "y > "
+    y = STDIN.gets.to_i
+
+    mines.play(x, y)
+  end
+rescue => e
+  puts e
   print_game(mines)
-
-  print "x > "
-  x = STDIN.gets.to_i
-
-  print "y > "
-  y = STDIN.gets.to_i
-
-  mines.play(x, y)
 end
