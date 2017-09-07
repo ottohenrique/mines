@@ -12,6 +12,14 @@ def iprompt(msg, d = '')
   prompt(msg, d).to_i
 end
 
+HELP = <<-HELP
+  p: jogar
+  f: colocar bandeira
+  s: placar
+  q: sair
+  ?: ajuda (esse comando)
+HELP
+
 
 colors = prompt('Deseja jogar com cores? (Y/n) > ', 'y')
 if colors == 'n'
@@ -25,6 +33,8 @@ cols = iprompt('Colunas (8) > ', 8)
 bombs = iprompt('Bombas (15) > ', 15)
 
 mines = Game.new(rows, cols, bombs)
+
+puts HELP
 
 begin
   while true
@@ -48,13 +58,7 @@ begin
     when 'q'
       exit(1)
     when '?'
-      puts <<-HELP
-          p: jogar
-          f: colocar bandeira
-          s: placar
-          q: sair
-          ?: ajuda (esse comando)
-        HELP
+      puts HELP
     else
       puts "#{x}: Comando inválido"
     end
