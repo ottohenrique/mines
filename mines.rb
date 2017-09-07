@@ -3,6 +3,8 @@ class Mines
 
   def initialize(rows, cols, mines)
     @board = Array.new(rows) { Array.new(cols) }
+    @state = Array.new(rows) { Array.new(cols) { '.' }}
+
     @rows = rows
     @cols = cols
 
@@ -11,7 +13,23 @@ class Mines
   end
 
   def board_state
-    @board
+    @state
+  end
+
+  def play(x, y)
+    return false if @state[x][y] != '.'
+
+    if @board[x][y] != 'x'
+      @state[x][y] = @board[x][y]
+
+      if @board[x][y] == ' '
+        neighbors(x, y).each do |neigh|
+          play(neigh[0], neigh[1])
+        end
+      end
+    end
+
+    true
   end
 
   def fill_bombs(mines)
@@ -34,7 +52,7 @@ class Mines
           neighbors(x, y).each do |neigh|
             bombs += 1 if @board[neigh[0]][neigh[1]] == 'x'
           end
-          @board[x][y] = bombs if bombs > 0
+          @board[x][y] = bombs > 0 ? bombs : ' '
         end
       end
     end
@@ -57,8 +75,17 @@ class Mines
   end
 end
 
-mines = Mines.new(5, 8, 10)
+mines = Mines.new(5, 8, 5)
 
 mines.board_state.each do |row|
   puts "[ #{row.join(' | ') } ]"
 end
+
+mines.play(0, 0)
+
+puts '===='
+
+mines.board_state.each do |row|
+  puts "[ #{row.join(' | ') } ]"
+end
+
