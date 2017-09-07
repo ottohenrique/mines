@@ -37,19 +37,13 @@ begin
       x = iprompt('x > ')
       y = iprompt('y > ')
 
-      if (x < 0 || x >= rows) ||
-          (y < 0 || y >= cols)
+      valid = if c == 'p'
+                mines.play(x, y)
+              else
+                mines.flag(x, y)
+              end
 
-        puts "Jogada inválida, jogar novamente"
-      else
-        valid = if c == 'p'
-                  mines.play(x, y)
-                else
-                  mines.flag(x, y)
-                end
-
-        puts "Jogada inválida, jogar novamente" unless valid
-      end
+      puts "Jogada inválida, jogar novamente" unless valid
     when 's'
     when 'q'
       exit(1)

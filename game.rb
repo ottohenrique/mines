@@ -17,7 +17,8 @@ class Game
   end
 
   def play(x, y)
-    return false if @state[x][y] != '.'
+    return false if (@state[x][y] != '.')
+    return false unless valid_cell?(x, y)
 
     if @board[x][y] != 'x'
       @state[x][y] = @board[x][y]
@@ -36,6 +37,8 @@ class Game
   end
 
   def flag(x, y)
+    return false unless valid_cell?(x, y)
+
     case @state[x][y]
     when '.'
       @state[x][y] = '?'
@@ -72,7 +75,12 @@ class Game
     end
   end
 
-  def neighbors(x,y)
+  def valid_cell?(x, y)
+    (x >= 0 && x < @rows) &&
+      (y >= 0 && y < @cols)
+  end
+
+  def neighbors(x, y)
     n = []
 
     [-1, 0, 1].each do |i|
