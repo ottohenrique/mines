@@ -27,6 +27,8 @@ class Mines
           play(neigh[0], neigh[1])
         end
       end
+    else
+      raise 'Booooom!'
     end
 
     true
@@ -75,17 +77,26 @@ class Mines
   end
 end
 
+
+def print_game(mines)
+  mines.board_state.each_with_index do |row, i|
+    if i == 0
+      puts "    #{(0..row.size-1).to_a.join('   ')}"
+    end
+    puts "#{i} [ #{row.join(' | ')} ]"
+  end
+end
+
 mines = Mines.new(5, 8, 5)
 
-mines.board_state.each do |row|
-  puts "[ #{row.join(' | ') } ]"
+while true
+  print_game(mines)
+
+  print "x > "
+  x = STDIN.gets.to_i
+
+  print "y > "
+  y = STDIN.gets.to_i
+
+  mines.play(x, y)
 end
-
-mines.play(0, 0)
-
-puts '===='
-
-mines.board_state.each do |row|
-  puts "[ #{row.join(' | ') } ]"
-end
-
