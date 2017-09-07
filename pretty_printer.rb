@@ -1,4 +1,4 @@
-class PrintPrinter
+class PrettyPrinter
   def initialize(game_state)
     @state = game_state.map do |row|
                row.map do |col|

@@ -1,4 +1,5 @@
-require './print_printer'
+require './pretty_printer'
+require './basic_printer'
 
 class Mines
   attr_accessor :rows, :cols
@@ -94,9 +95,18 @@ end
 
 mines = Mines.new(5, 8, 5)
 
+print "Deseja jogar com cores? (Y/n) > "
+colors = STDIN.gets.chomp.downcase
+
+if colors == 'n'
+  @printer = BasicPrinter
+else
+  @printer = PrettyPrinter
+end
+
 begin
   while true
-    PrintPrinter.new(mines.board_state).print
+    @printer.new(mines.board_state).print
 
     print "flag (y/N) > "
     f = STDIN.gets.chomp.downcase
@@ -117,6 +127,6 @@ begin
     puts "Jogada inválida, jogar novamente" unless valid
   end
 rescue => e
+  @printer.new(mines.board_state).print
   puts e
-  PrintPrinter.new(mines.board_state).print
 end
