@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require './game'
 
 describe Game do
-  describe 'Basic empty game board, without bombs' do
+  describe 'Basic empty game board' do
     before do
       @game = Game.new(3, 3, 0)
     end
@@ -36,7 +36,7 @@ describe Game do
     end
   end
 
-  describe 'flagging a cell' do
+  describe 'flag command' do
     before do
       @game = Game.new(1, 1, 0)
     end
