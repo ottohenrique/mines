@@ -32,8 +32,8 @@ class Game
       @open_cells += 1
 
       if @board[x][y] == ' '
-        neighbors(x, y).each do |neigh|
-          play(neigh[0], neigh[1])
+        siblings(x, y).each do |sibling|
+          play(sibling[0], sibling[1])
         end
       end
     else
@@ -76,8 +76,8 @@ class Game
       row.each_with_index do |col, y|
         if @board[x][y] != 'x'
           bombs = 0
-          neighbors(x, y).each do |neigh|
-            bombs += 1 if @board[neigh[0]][neigh[1]] == 'x'
+          siblings(x, y).each do |sibling|
+            bombs += 1 if @board[sibling[0]][sibling[1]] == 'x'
           end
           @board[x][y] = bombs > 0 ? bombs : ' '
         end
@@ -90,7 +90,7 @@ class Game
       (y >= 0 && y < @cols)
   end
 
-  def neighbors(x, y)
+  def siblings(x, y)
     n = []
 
     [-1, 0, 1].each do |i|
