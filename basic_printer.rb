@@ -1,14 +1,26 @@
 class BasicPrinter
-  def initialize(game_state)
-    @state = game_state
+  attr_accessor :board
+
+  def initialize(board)
+    @board = board
   end
 
   def print
-    @state.each_with_index do |row, i|
+    board.each_with_index do |row, i|
       if i == 0
-        puts "    #{(0..row.size-1).to_a.join('   ')}"
+        puts header(row.size)
       end
-      puts "#{i} [ #{row.join(' | ')} ]"
+
+      puts "#{x_index(i)} [ #{row.join(' | ')} ]"
     end
+  end
+
+  def header(max_y)
+    "     " + (0..max_y-1).to_a.map { |n| n.to_s.rjust(3) }.join(' ')
+
+  end
+
+  def x_index(x)
+    x.to_s.rjust(3)
   end
 end
