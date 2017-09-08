@@ -37,7 +37,7 @@ mines = Game.new(rows, cols, bombs)
 puts HELP
 
 begin
-  while true
+  while !mines.victory?
     @printer.new(mines.board_state).print
 
     c = prompt('comando (P/f/s/q/?) > ', 'p')
@@ -55,6 +55,9 @@ begin
 
       puts "Jogada inválida, jogar novamente" unless valid
     when 's'
+      puts "> bandeiras: #{mines.flags}"
+      puts "> abertas:   #{mines.open_cells}"
+      puts "> fechadas:  #{mines.total_cells - mines.open_cells}"
     when 'q'
       exit(1)
     when '?'
@@ -62,8 +65,14 @@ begin
     else
       puts "#{x}: Comando inválido"
     end
-
   end
+
+  puts ""
+  puts "Parabéns!! você encontrou todas as bombas!"
+  puts ""
+
+  @printer.new(mines.board_state).print
+
 rescue => e
   @printer.new(mines.board_state).print
   puts e

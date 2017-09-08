@@ -1,5 +1,6 @@
 class Game
   attr_accessor :rows, :cols
+  attr_reader :flags, :open_cells, :total_cells, :bombs
 
   def initialize(rows, cols, mines)
     @board = Array.new(rows) { Array.new(cols) }
@@ -7,6 +8,12 @@ class Game
 
     @rows = rows
     @cols = cols
+
+    @bombs = mines
+
+    @flags = 0
+    @open_cells = 0
+    @total_cells = @rows * @cols
 
     fill_bombs(mines)
     fill_numbers
@@ -17,11 +24,12 @@ class Game
   end
 
   def play(x, y)
-    return false if (@state[x][y] != '.')
     return false unless valid_cell?(x, y)
+    return false if (@state[x][y] != '.')
 
     if @board[x][y] != 'x'
       @state[x][y] = @board[x][y]
+      @open_cells += 1
 
       if @board[x][y] == ' '
         neighbors(x, y).each do |neigh|
@@ -42,8 +50,10 @@ class Game
     case @state[x][y]
     when '.'
       @state[x][y] = '?'
+      @flags += 1
     when '?'
       @state[x][y] = '.'
+      @flags -= 1
     else
       false
     end
@@ -94,5 +104,9 @@ class Game
     end
 
     n
+  end
+
+  def victory?
+    @total_cells - @open_cells == @bombs
   end
 end
