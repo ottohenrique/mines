@@ -7,23 +7,25 @@
 
 ## Comandos
 
-p (play)
-  abre uma célula nas coordenadas X, Y
-  não permite abrir uma célula já aberta ou com flag (`?`)
+* p (play)
 
-f (flag)
-  marca uma célula como dúvidosa nas coordenadas X, Y
-  não permite marcar como flag uma célula já aberta
+  Abre uma célula nas coordenadas X, Y. Não permite abrir uma célula já aberta ou com flag (`?`).
 
-s (score)
-  exibe o total de flags colocadas, o total de células abertas e
-  quantas jogadas ainda estão disponíveis
+* f (flag)
 
-q (quit)
-  sai do jogo
+  Marca uma célula como dúvidosa nas coordenadas X, Y. Não permite marcar como flag uma célula já aberta.
+
+* s (score)
+
+  Exibe o total de flags colocadas, o total de células abertas e quantas jogadas ainda estão disponíveis.
+
+* q (quit)
+
+  Sai do jogo.
   
-? (ajuda)
-  exibe um texto com essa explicação dos comandos
+* ? (ajuda)
+
+  Exibe um texto com essa explicação dos comandos
   
 ## Gameplay
 
