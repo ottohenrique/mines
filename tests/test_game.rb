@@ -56,6 +56,7 @@ describe Game do
 
     it 'cant flag a invalid cell' do
       assert_equal false, @game.flag(10, 10)
+      assert_equal false, @game.flag(-1, -1)
     end
   end
 end

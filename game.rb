@@ -99,7 +99,7 @@ class Game
         unless (i == 0 && j == 0) ||
             (x + i < 0 || x + i >= @rows) ||
             (y + j < 0 || y + j >= @cols)
-          n << [x + i, y+j]
+          n << [x + i, y + j]
         end
       end
     end
