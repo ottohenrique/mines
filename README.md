@@ -1,8 +1,8 @@
 # mines.rb
 
 ## Como jogar
-    git clone 
-    
+    git clone git@github.com:ottohenrique/mines.git
+    cd mines
     ruby mines.rb
 
 ## Comandos
