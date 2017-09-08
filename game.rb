@@ -46,6 +46,7 @@ class Game
 
   def flag(x, y)
     return false unless valid_cell?(x, y)
+    return false unless %w(. ?).include?(@state[x][y])
 
     case @state[x][y]
     when '.'
@@ -54,9 +55,9 @@ class Game
     when '?'
       @state[x][y] = '.'
       @flags -= 1
-    else
-      false
     end
+
+    true
   end
 
   def fill_bombs(mines)

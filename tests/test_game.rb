@@ -35,4 +35,23 @@ describe Game do
       assert_equal siblings, game.siblings(1, 1)
     end
   end
+
+  describe 'flagging a cell' do
+    before do
+      @game = Game.new(1, 1, 0)
+    end
+
+    it 'marks and unmarks closed cell with flag' do
+      assert_equal true, @game.flag(0, 0)
+      assert_equal [['?']], @game.board_state
+
+      assert_equal true, @game.flag(0, 0)
+    end
+
+    it 'cant mark a open cell with flag' do
+      @game.play(0, 0)
+
+      assert_equal false, @game.flag(0, 0)
+    end
+  end
 end
